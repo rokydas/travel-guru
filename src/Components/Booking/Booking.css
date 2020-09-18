@@ -1,0 +1,12 @@
+.booking-info{
+    background-color: white;
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: 50px;
+    width: 250px;
+    color: gray;
+}
+
+.place-info{
+    margin: 100px 150px;
+}

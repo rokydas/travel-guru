@@ -1,0 +1,33 @@
+img{
+    width: 100px;
+}
+
+.search{
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    border-radius: 5px;
+    width: 300px;
+    padding: 3px 15px;
+}
+
+.search:focus{
+    outline: none;
+}
+
+/* input::placeholder {
+    color: black;
+    opacity: 1; /* Firefox 
+}
+ */
+
+
+.custom-btn{
+    background-color: #F9A51A;
+    border: none;
+    padding: 1px 10px;
+    border-radius: 5px;
+}
+
+/* .nav{
+    margin: 0px 50px;
+} */
