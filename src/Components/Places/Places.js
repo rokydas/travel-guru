@@ -9,7 +9,6 @@ const Places = () => {
     const history = useHistory();
 
     const [selectedPlace, setSelectedPlace] = useState(locationData[0]);
-    // console.log(selectedPlace);
 
     const handleClick = (data) => {
         setSelectedPlace(data);
@@ -29,7 +28,7 @@ const Places = () => {
                 </div>
                 <div className="col-md-8 pictures">
                 {
-                    locationData.map(place => <Place handleClick={handleClick} selectedPlace={selectedPlace} data={place}></Place>)
+                    locationData.map(place => <Place key={selectedPlace.id} handleClick={handleClick} selectedPlace={selectedPlace} data={place}></Place>)
                 }
                 
                 </div>

@@ -22,6 +22,8 @@ const Login = () => {
         isLength: false
     });
 
+    const [passwordMatched, setPasswordMatched] = useState(false)
+
     const history = useHistory();
     const location = useLocation();
     let { from } = location.state || { from: { pathname: "/" } };
@@ -36,7 +38,26 @@ const Login = () => {
     const [isNew, setIsNew] = useState(false);
 
     const handlePassChange = (event) => {
+        let isFieldValid = false;
         
+        const isUpper =  (/[A-Z]/.test(event.target.value));
+        const isLower =  (/[a-z]/.test(event.target.value));
+        const isLength = event.target.value.length >= 6
+        const isNumber = /\d{1}/.test(event.target.value);
+
+        setIsPasswordValid({isUpper, isLower, isLength, isNumber});
+
+        if(isPasswordValid.isUpper && isPasswordValid.isLower && isPasswordValid.isLength && isPasswordValid.isNumber){
+            isFieldValid = true;
+        }
+
+        assignValueToUser(isFieldValid, event.target.name, event.target.value);
+    }
+
+    const handleConfirmPass = (event) => {
+        if(user.password === event.target.value) {
+            setPasswordMatched(true);
+        }
     }
 
     const handleOnBlur = (event) => {
@@ -45,22 +66,20 @@ const Login = () => {
         if(event.target.name === 'email'){
             isFieldValid = /\S+@\S+\.\S+/.test(event.target.value);
         }
-
-        else if(event.target.name === 'password' || event.target.name === 'confirmPassword'){
-            isFieldValid = event.target.value.length >= 6 && /\d{1}/.test(event.target.value);
-        }
         
         else{
             isFieldValid = true;
         }
 
+        assignValueToUser(isFieldValid, event.target.name, event.target.value);
+    }
+
+    const assignValueToUser = (isFieldValid, eventName, eventValue) => {
         if(isFieldValid){
             const newUser = {...user};
-            newUser[event.target.name] = event.target.value;
+            newUser[eventName] = eventValue;
             setUser(newUser);
-            console.log(user);
         }
-        
     }
 
     const handleCreateAccount = (event) => {
@@ -110,9 +129,10 @@ const Login = () => {
     }
 
     const handleFbSignIn = () => {
-        firebase.auth().signInWithPopup(FbProvider).then(function(result) {
-            var token = result.credential.accessToken;
-            var fbUser = result.user;
+        console.log(isPasswordValid);
+        firebase.auth().signInWithPopup(FbProvider)
+        .then(function(result) {
+            const fbUser = result.user;
             const {displayName, email, photoURL} = fbUser;
             const newUser = {
                 displayName: displayName,
@@ -122,10 +142,9 @@ const Login = () => {
             setSignedInUser(newUser);
             history.replace(from);
           }).catch(function(error) {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            var email = error.email;
-            var credential = error.credential;
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage);
           });
     }
 
@@ -137,19 +156,14 @@ const Login = () => {
             history.replace(from);
         })
         .catch(function(error) {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            var email = error.email;
-            var credential = error.credential;
-            console.log(errorMessage);
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage);
         });
     }
 
     return (
         <div className="login">
-            {/* <h3>Name: {signedInUser.displayName}</h3>
-            <p>Email: {signedInUser.email}</p>
-            <img src={signedInUser.photoURL} alt=""/> */}
             {isNew && <h2>Create an account</h2>}
             {!isNew && <h2>Login</h2>}
             <form action="">
@@ -160,17 +174,17 @@ const Login = () => {
                     </div>
                 }
                 
-                <input onBlur={handleOnBlur} placeholder="Username or Email" type="email" name="email"/><br/><br/>
-                <input onBlur={handleOnBlur} type="password" name="password" placeholder="Password"/>
+                <input onChange={handleOnBlur} placeholder="Username or Email" type="email" name="email"/><br/><br/>
+                <input onChange={handlePassChange} type="password" name="password" placeholder="Password"/>
 
                 {isNew ? 
                     <div style={{color: 'red'}}>
-                        <li>Password must have at least one uppercase character</li>
-                        <li>Password must have at least one lowercase character</li>
-                        <li>Password must have at least one number</li>
-                        <li>Password length have to be greater than or equal to 6</li><br/>
-                        <input onBlur={handleOnBlur} placeholder="Confirm Password" type="password" name="confirmPassword" id=""/><br/>
-                        <li>Password and Confirm Password don't match</li><br/>
+                        {!isPasswordValid.isUpper && <li>Password must have at least one uppercase character</li>}
+                        {!isPasswordValid.isLower && <li>Password must have at least one lowercase character</li>}
+                        {!isPasswordValid.isNumber && <li>Password must have at least one number</li>}
+                        {!isPasswordValid.isLength && <li>Password length have to be greater than or equal to 6</li>}<br/>
+                        <input onChange={handleConfirmPass} placeholder="Confirm Password" type="password" name="confirmPassword" id=""/><br/>
+                        {!passwordMatched && <li>Password and Confirm Password don't match</li>}<br/>
                     </div>
                 :
                     <div>
