@@ -22,6 +22,8 @@ const Login = () => {
         isLength: false
     });
 
+    const [errorMessage, setErrorMessage] = useState('');
+
     const [passwordMatched, setPasswordMatched] = useState(false)
 
     const history = useHistory();
@@ -37,6 +39,12 @@ const Login = () => {
 
     const [isNew, setIsNew] = useState(false);
 
+    const handlePassLogin = (event) => {
+        const newUser = {...user}
+        newUser[event.target.name] = event.target.value;
+        setUser(newUser);
+    }
+
     const handlePassChange = (event) => {
         let isFieldValid = false;
         
@@ -47,16 +55,28 @@ const Login = () => {
 
         setIsPasswordValid({isUpper, isLower, isLength, isNumber});
 
-        if(isPasswordValid.isUpper && isPasswordValid.isLower && isPasswordValid.isLength && isPasswordValid.isNumber){
+        if(isUpper && isLower && isLength && isNumber){
             isFieldValid = true;
         }
 
-        assignValueToUser(isFieldValid, event.target.name, event.target.value);
+        // assignValueToUser(isFieldValid, event.target.name, event.target.value);
+
+        if(isFieldValid){
+            const newUser = {...user};
+            newUser[event.target.name] = event.target.value;
+            setUser(newUser);
+        }
     }
 
     const handleConfirmPass = (event) => {
         if(user.password === event.target.value) {
             setPasswordMatched(true);
+            const newUser = {...user};
+            newUser[event.target.name] = event.target.value;
+            setUser(newUser);
+        }
+        else{
+            setPasswordMatched(false);
         }
     }
 
@@ -71,45 +91,42 @@ const Login = () => {
             isFieldValid = true;
         }
 
-        assignValueToUser(isFieldValid, event.target.name, event.target.value);
-    }
+        // assignValueToUser(isFieldValid, event.target.name, event.target.value);
 
-    const assignValueToUser = (isFieldValid, eventName, eventValue) => {
         if(isFieldValid){
             const newUser = {...user};
-            newUser[eventName] = eventValue;
+            newUser[event.target.name] = event.target.value;
             setUser(newUser);
         }
     }
 
     const handleCreateAccount = (event) => {
         if(user.email && user.password && user.password === user.confirmPassword) {
-            
             firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
             .then(res => {
-                // updateUserProfile(displayName);
                 setSignedInUser(user);
                 const name = user.firstName + ' ' + user.lastName;
+                const newUser = {...user};
+                newUser.displayName = name;
+                setSignedInUser(newUser);
                 updateUserProfile(name);
                 history.replace(from);
             })
             .catch(function(error) {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.log(errorCode, errorMessage);
+                const errorMessage = error.message;
+                setErrorMessage(errorMessage);
             });
         }
         event.preventDefault();
-        history.replace(from);
     }
 
     const updateUserProfile = (name) => {
-        var user = firebase.auth().currentUser;
-        user.updateProfile({
+        const newUser = firebase.auth().currentUser;
+        newUser.updateProfile({
             displayName: name,
         })
         .then(function() {
-            console.log('User name updated successfully');
+            // updated successfully
         })
         .catch(function(error) {
             console.log(error)
@@ -123,13 +140,15 @@ const Login = () => {
             newUserInfo.displayName = res.user.displayName;
             setUser(newUserInfo);
             setSignedInUser(newUserInfo);
+            history.replace(from);
         })
+        .catch(function(error) {
+            setErrorMessage(error.message)
+        });
         event.preventDefault();
-        history.replace(from);
     }
 
     const handleFbSignIn = () => {
-        console.log(isPasswordValid);
         firebase.auth().signInWithPopup(FbProvider)
         .then(function(result) {
             const fbUser = result.user;
@@ -175,7 +194,10 @@ const Login = () => {
                 }
                 
                 <input onChange={handleOnBlur} placeholder="Username or Email" type="email" name="email"/><br/><br/>
-                <input onChange={handlePassChange} type="password" name="password" placeholder="Password"/>
+                {isNew ? <input onChange={handlePassChange} type="password" name="password" placeholder="Password"/>
+                : <div>
+                   <input onChange={handlePassLogin} type="password" name="password" placeholder="Password"/>
+                </div>}
 
                 {isNew ? 
                     <div style={{color: 'red'}}>
@@ -194,6 +216,7 @@ const Login = () => {
                     </div>
                 }
                 
+                <p style={{color: 'red'}}>{errorMessage}</p> 
                 {isNew ? <input onClick={handleCreateAccount} type="submit" value="Create an account"/>
                 : <input onClick={handleLogin} type="submit" value="Login"/>}
 

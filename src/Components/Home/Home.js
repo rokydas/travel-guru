@@ -8,7 +8,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 import Places from '../Places/Places';
 import NotFound from '../NotFound/NotFound';

@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
 import Logo from '../../travel-guru-resource/Logo2.png';
 import { Link } from 'react-router-dom';
-import { Button, Form, FormControl, Nav, Navbar } from 'react-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
 import './Header.css';
-import SearchIcon from '@material-ui/icons/Search';
 import { UserContext } from '../Home/Home';
 
 const Header = () => {
