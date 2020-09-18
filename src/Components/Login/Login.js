@@ -212,7 +212,7 @@ const Login = () => {
                     <div>
                         <input type="checkbox" name="remember" label="Remember me"/>&nbsp;&nbsp;
                         Remember Me<br/><br/>
-                        <Link to="/forget">Forget Password?</Link><br/><br/>
+                        Forget Password?<br/><br/>
                     </div>
                 }
                 
@@ -224,8 +224,8 @@ const Login = () => {
                 : <p>Don't have an account? <span onClick={() => setIsNew(!isNew)} style={togglerStyle}>Create an account</span></p>}
                 
             </form>
-            <button onClick={handleFbSignIn}>Continue with Facebook</button><br/>
-            <button onClick={handleGoogleSignIn}>Continue with Google</button>
+            <button className="google-fb" onClick={handleFbSignIn}>Continue with Facebook</button><br/>
+            <button className="google-fb" onClick={handleGoogleSignIn}>Continue with Google</button>
         </div>
     );
 };
