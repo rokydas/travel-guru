@@ -217,8 +217,8 @@ const Login = () => {
                 }
                 
                 <p style={{color: 'red'}}>{errorMessage}</p> 
-                {isNew ? <input onClick={handleCreateAccount} type="submit" value="Create an account"/>
-                : <input onClick={handleLogin} type="submit" value="Login"/>}
+                {isNew ? <input className="google-fb" onClick={handleCreateAccount} type="submit" value="Create an account"/>
+                : <input className="google-fb" onClick={handleLogin} type="submit" value="Login"/>}
 
                 {isNew ? <p>Already have an account? <span onClick={() => setIsNew(!isNew)} style={togglerStyle}>Login</span></p>
                 : <p>Don't have an account? <span onClick={() => setIsNew(!isNew)} style={togglerStyle}>Create an account</span></p>}
