@@ -1,4 +1,4 @@
-# travel-guru
+# Travel Guru
 It is a travel agency website. On this website, you can search for places to visit and can see the description of the spectacular places. Here are more facilities for a user. They are: 
 - Users can sign up using his/her email. 
 - Users can continue using Google and Facebook shortly.
