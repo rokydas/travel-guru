@@ -1,0 +1,14 @@
+.logo {
+    width: 120px;
+}
+
+.custom-btn {
+    background-color: #F9A51A;
+    padding: 5px 20px;
+    border: none;
+    border-radius: 5px;
+}
+
+.item-gap{
+    margin-right: 150px;
+}

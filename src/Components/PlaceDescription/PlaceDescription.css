@@ -1,0 +1,22 @@
+.description {
+    color: white;
+    padding-right: 60px;
+    text-align: justify;
+    border-radius: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+    .description {
+        padding-right: 10px;
+    }    
+}
+
+@media only screen and (max-width: 1200px) {
+    .description {
+        margin-bottom: 50px;
+    }
+}
+
+.heading {
+    font-size: 60px;
+}

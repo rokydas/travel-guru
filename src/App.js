@@ -1,13 +1,33 @@
-import React from 'react';
-import Switch from 'react-bootstrap/esm/Switch';
-import { Route, Router } from 'react-router-dom';
-import './App.css';
-import Home from './Components/Home/Home';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import Home from './components/Home/Home';
+import Login from './components/Login/Login';
+import Booking from "./components/Booking/Booking";
 
 function App() {
   return (
     <div>
-      <Home></Home>
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/home">
+            <Home />
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/booking/:id">
+            <Booking />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }

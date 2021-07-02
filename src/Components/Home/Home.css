@@ -1,6 +1,56 @@
-.home {
-    background-image: url('../../travel-guru-resource/Image/Rectangle1.jpg');
+.home-page {
+    background-image: url('../../travel-guru-resource/Image/background.jpg');
     background-size: cover;
-    height: 935px;
-    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-bottom: 110px;
+}
+
+.custom-container {
+    margin: 10px 10%;
+    /* margin-top: 30px;
+    padding-bottom: 43px; */
+}
+
+.arrow-btn {
+    background-color: white;
+    border-radius: 40%;
+    border: none;
+    font-size: 25px;
+    width: 50px;
+    height: 50px;
+}
+
+.search-box {
+    margin-bottom: 70px;
+}
+
+.search-box input {
+    width: 70%;
+    padding: 10px 20px;
+    border-radius: 20px 0px 0px 20px;
+    border: none;
+}
+
+.search-box input:focus {
+    outline: none;
+}
+
+.search-btn {
+    border: none;
+    background-color: #F9A51A;
+    padding: 10px 30px;
+    border-radius: 0px 20px 20px 0px;
+}
+
+@media only screen and (min-width: 1600px) {
+    .search-box input {
+        width: 25%;
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1600px) {
+    .search-box input {
+        width: 50%;
+    }
 }

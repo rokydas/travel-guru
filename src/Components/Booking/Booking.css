@@ -1,12 +1,14 @@
-.booking-info{
-    background-color: white;
-    border-radius: 5px;
-    padding: 15px;
-    margin-top: 50px;
-    width: 250px;
-    color: gray;
+.booking-page {
+    background-image: url('../../travel-guru-resource/Image/background.jpg');
+    height: 935px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-.place-info{
-    margin: 100px 150px;
+.booking-form-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 500px;
 }

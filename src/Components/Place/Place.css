@@ -1,10 +1,25 @@
-.img-box{
-    margin: 10px;
-    width: 200px;
-    height: 300px;
-    border-radius: 20px;
+.place-name {
+    position: relative;
+    bottom: 50px;
+    left: 20px;
+    color: white;
 }
 
-.active-place{
-    border: 5px solid #FBBC04;
+.place-image {
+    border-radius: 30px;
+    filter: brightness(70%);
+}
+
+.active-place {
+    border: 8px solid #F9A51A;
+}
+
+.inactive-place {
+    border: 8px solid transparent;
+}
+
+@media only screen and (min-width: 1400px) and (max-width: 1600px) {
+    .place-name {
+        font-size: 20px;
+    }
 }
